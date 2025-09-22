@@ -1,0 +1,122 @@
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+  color: #222;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  padding: 2rem 1rem 1rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.category-tabs button {
+  background: #f0f0f0;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.category-tabs button:hover {
+  background: #e0e0e0;
+}
+
+.customization-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.customization-controls input,
+.customization-controls select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+.cta {
+  background: #E85A29;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(232,90,41,0.08);
+  transition: background 0.2s;
+}
+.cta:hover {
+  background: #d14e22;
+}
+
+.preview-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  min-height: 400px;
+}
+.canvas-placeholder {
+  width: 600px;
+  height: 400px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #bbb;
+}
+
+@media (max-width: 900px) {
+  .canvas-placeholder {
+    width: 90vw;
+    height: 40vw;
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .controls-panel {
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+  }
+  .canvas-placeholder {
+    width: 98vw;
+    height: 50vw;
+    min-height: 120px;
+  }
+  .customization-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+  color: #888;
+}
