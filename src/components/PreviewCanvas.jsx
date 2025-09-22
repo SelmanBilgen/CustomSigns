@@ -3,7 +3,7 @@ import "./PreviewCanvas.css";
 
 // Constants for crib mapping
 const CRIB_LENGTH_INCH = 52; // standard crib length
-const CRIB_WIDTH_PX = 900;   // measured pixel width of crib in image
+const CRIB_WIDTH_PX = 900; // measured pixel width of crib in image
 const PX_PER_INCH = CRIB_WIDTH_PX / CRIB_LENGTH_INCH;
 
 function fitFontSize(text, fontFamily, targetWidth) {
@@ -48,7 +48,8 @@ function PreviewCanvas({
   const defaultLine1Y = 5 * PX_PER_INCH; // 5 inch below top
   const defaultLine1X = (canvasWidth - line1Size * PX_PER_INCH) / 2;
   const defaultLine2Y = defaultLine1Y + 3 * PX_PER_INCH; // 3 inch below line 1
-  const defaultLine2X = defaultLine1X + line1Size * PX_PER_INCH - line2Size * PX_PER_INCH; // align end
+  const defaultLine2X =
+    defaultLine1X + line1Size * PX_PER_INCH - line2Size * PX_PER_INCH; // align end
 
   // Font size fitting
   const [fontSize1, setFontSize1] = useState(40);
