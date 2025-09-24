@@ -27,19 +27,6 @@ function App() {
   const [color2, setColor2] = useState(COLOR_OPTIONS[0].value);
   const [line1Width, setLine1Width] = useState(FONT_WIDTH_OPTIONS[0].value);
   const [line2Width, setLine2Width] = useState(FONT_WIDTH_OPTIONS[0].value);
-  const [background, setBackground] = useState("");
-  const [showGrid, setShowGrid] = useState(false);
-  const [textPosition, setTextPosition] = useState({ x: 100, y: 100 });
-
-  // Handle background upload
-  const handleBgUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (ev) => setBackground(ev.target.result);
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div className="app-container">
