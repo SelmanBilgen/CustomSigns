@@ -6,18 +6,66 @@ body {
 }
 
 .app-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
 
-.controls-panel {
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem 2rem;
   background: #fff;
-  padding: 2rem 1rem 1rem 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.controls-panel {
+  background: #fff;
+  padding: 2rem;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.color-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.color-cube {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.color-cube.selected {
+  border-color: #007bff;
+}
+
+.delete-btn, .add-line-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+.add-line-btn {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  color: #007bff;
 }
 
 .logo {
@@ -82,6 +130,8 @@ body {
   justify-content: center;
   background: #f8f8f8;
   min-height: 400px;
+  overflow-y: auto;
+  height: 60vh;
 }
 .canvas-placeholder {
   width: 600px;

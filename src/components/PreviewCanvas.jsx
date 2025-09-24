@@ -34,36 +34,33 @@ function fitFontSize(text, fontFamily, targetWidthPx) {
   return fontSize;
 }
 
-function PreviewCanvas({
-  line1,
-  line2,
-  font1,
-  color1,
-  font2,
-  color2,
-  line1Width = 30, // default 30 inch
-  line2Width = 12, // default 12 inch
-}) {
-  const [fontSize1, setFontSize1] = useState(40);
-  const [fontSize2, setFontSize2] = useState(40);
-
-  const line1WidthPx = line1Width * INCH_TO_METER * PX_PER_METER;
-  const line2WidthPx = line2Width * INCH_TO_METER * PX_PER_METER;
+const Line = ({ text, font, color, width, initialPosition }) => {
+  const [fontSize, setFontSize] = useState(40);
+  const widthPx = width * INCH_TO_METER * PX_PER_METER;
 
   useEffect(() => {
-    if (line1) {
-      const size = fitFontSize(line1, font1, line1WidthPx);
-      setFontSize1(size);
+    if (text) {
+      const size = fitFontSize(text, font, widthPx);
+      setFontSize(size);
     }
-  }, [line1, font1, line1Width]);
+  }, [text, font, width]);
 
-  useEffect(() => {
-    if (line2) {
-      const size = fitFontSize(line2, font2, line2WidthPx);
-      setFontSize2(size);
-    }
-  }, [line2, font2, line2Width]);
+  return (
+    <DraggableText
+      initialPosition={initialPosition}
+      style={{
+        fontFamily: font,
+        color: color,
+        fontSize: `${fontSize}px`,
+        width: `${widthPx}px`,
+      }}
+    >
+      {text}
+    </DraggableText>
+  );
+};
 
+function PreviewCanvas({ lines }) {
   return (
     <div
       id="preview-canvas"
@@ -79,30 +76,13 @@ function PreviewCanvas({
         height: "550px",
       }}
     >
-      <DraggableText
-        initialPosition={{ x: 20, y: 50 }}
-        style={{
-          fontFamily: font1,
-          color: color1,
-          fontSize: `${fontSize1}px`,
-          width: `${line1WidthPx}px`,
-        }}
-      >
-        {line1}
-      </DraggableText>
-      {line2 && (
-        <DraggableText
-          initialPosition={{ x: 20, y: 150 }}
-          style={{
-            fontFamily: font2,
-            color: color2,
-            fontSize: `${fontSize2}px`,
-            width: `${line2WidthPx}px`,
-          }}
-        >
-          {line2}
-        </DraggableText>
-      )}
+      {lines.map((line, index) => (
+        <Line
+          key={index}
+          {...line}
+          initialPosition={{ x: 20, y: 50 + index * 100 }}
+        />
+      ))}
     </div>
   );
 }
