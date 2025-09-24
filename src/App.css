@@ -6,31 +6,65 @@ body {
 }
 
 .app-container {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
+  display: flex;
+  height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+.canvas-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+}
+
+.controls-section {
+  flex: 1;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.04);
+  overflow-y: auto;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1rem 2rem;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-.controls-panel {
-  background: #fff;
-  padding: 2rem;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
-  flex-shrink: 0;
+.customization-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .controls-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
   align-items: center;
-  gap: 1.5rem;
+  gap: 10px;
+}
+
+.delete-btn {
+  color: red;
+}
+
+.ruler-toggle {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
@@ -89,8 +123,30 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
-.category-tabs button:hover {
+.category-tabs button:hover,
+.category-tabs button.active {
   background: #e0e0e0;
+}
+
+.background-options {
+  display: flex;
+  gap: 10px;
+  padding: 10px 2rem;
+  background: #fff;
+}
+
+.bg-thumbnail {
+  width: 80px;
+  height: 60px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-thumbnail.active {
+  border-color: #007bff;
 }
 
 .customization-controls {
