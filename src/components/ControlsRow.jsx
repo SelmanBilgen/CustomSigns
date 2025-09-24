@@ -41,7 +41,7 @@ const ControlsRow = ({
       </select>
       {onDelete && (
         <button onClick={onDelete} className="delete-btn">
-          &#x1f5d1;
+          &times;
         </button>
       )}
     </div>

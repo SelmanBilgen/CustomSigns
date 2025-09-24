@@ -60,7 +60,21 @@ const Line = ({ text, font, color, width, initialPosition }) => {
   );
 };
 
-function PreviewCanvas({ lines }) {
+import Ruler from "./Ruler";
+
+function PreviewCanvas({ lines, background, showRuler }) {
+  const [totalWidthPx, setTotalWidthPx] = useState(0);
+
+  useEffect(() => {
+    const widths = lines.map(
+      (line) => line.width * INCH_TO_METER * PX_PER_METER
+    );
+    setTotalWidthPx(Math.max(...widths));
+  }, [lines]);
+
+  const totalWidthIn = totalWidthPx / (INCH_TO_METER * PX_PER_METER);
+  const totalWidthCm = totalWidthIn * 2.54;
+
   return (
     <div
       id="preview-canvas"
@@ -69,13 +83,14 @@ function PreviewCanvas({ lines }) {
         width: "100%",
         maxWidth: "700px",
         aspectRatio: "1625/1280",
-        background: `url('/nursery-1.webp') center center/cover no-repeat`,
+        background: `url(${background}) center center/cover no-repeat`,
         position: "relative",
         overflow: "hidden",
         margin: "0 auto",
         height: "550px",
       }}
     >
+      {showRuler && <Ruler widthIn={totalWidthIn} widthCm={totalWidthCm} />}
       {lines.map((line, index) => (
         <Line
           key={index}
