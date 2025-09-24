@@ -1,21 +1,26 @@
 body {
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
   background: #f8f8f8;
   margin: 0;
+  display: block;
+  min-height: 100vh;
   color: #222;
 }
 
 .app-container {
-  display: flex;
+  //display: flex;
   height: 100vh;
 }
 
 .main-content {
   display: flex;
+  flex-direction: row;
   flex: 1;
+  //margin-top: 3rem;
 }
 
 .canvas-section {
+  margin-top: 3rem;
   flex: 3;
   display: flex;
   flex-direction: column;
@@ -23,17 +28,19 @@ body {
 }
 
 .controls-section {
+  //margin-top: 3rem;
   flex: 1;
+  justify-content: wrap;
   padding: 2rem;
   background: #fff;
-  box-shadow: -2px 0 8px rgba(0,0,0,0.04);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.04);
   overflow-y: auto;
 }
 
 .header {
   padding: 1rem 2rem;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .customization-controls {
@@ -43,10 +50,12 @@ body {
 }
 
 .controls-row {
-  display: grid;
-  grid-template-columns: 1fr auto auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  //grid-template-columns: 1fr auto auto auto auto;
   align-items: center;
-  gap: 10px;
+  //gap: 10px;
 }
 
 .delete-btn {
@@ -54,8 +63,9 @@ body {
 }
 
 .ruler-toggle {
+  color: #568f56ff
   background: none;
-  border: 1px solid #ddd;
+  border: 1px solid #9c4444ff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
@@ -73,12 +83,18 @@ body {
   gap: 0.5rem;
 }
 
+.color-cubes {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  max-width: 200px;
+}
 .color-cube {
   width: 24px;
   height: 24px;
   border-radius: 4px;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 1px solid gray;
   transition: border-color 0.2s;
 }
 
@@ -86,7 +102,8 @@ body {
   border-color: #007bff;
 }
 
-.delete-btn, .add-line-btn {
+.delete-btn,
+.add-line-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -115,7 +132,7 @@ body {
   margin-bottom: 1rem;
 }
 .category-tabs button {
-  background: #f0f0f0;
+  background: #67a579ff;
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 20px;
@@ -125,19 +142,20 @@ body {
 }
 .category-tabs button:hover,
 .category-tabs button.active {
-  background: #e0e0e0;
+  background: #3e6a3fff;
 }
 
 .background-options {
   display: flex;
-  gap: 10px;
-  padding: 10px 2rem;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 1rem 2rem;
   background: #fff;
 }
 
 .bg-thumbnail {
-  width: 80px;
-  height: 60px;
+  width: 8rem;
+  height: 6rem;
   border: 2px solid transparent;
   cursor: pointer;
   transition: border-color 0.2s;
@@ -164,7 +182,7 @@ body {
   font-size: 1rem;
 }
 .cta {
-  background: #E85A29;
+  background: #e85a29;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -172,7 +190,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(232,90,41,0.08);
+  box-shadow: 0 2px 8px rgba(232, 90, 41, 0.08);
   transition: background 0.2s;
 }
 .cta:hover {
@@ -182,6 +200,7 @@ body {
 .preview-area {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #f8f8f8;
@@ -194,12 +213,19 @@ body {
   height: 400px;
   background: #fff;
   border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   color: #bbb;
+}
+.line-text {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
 }
 
 @media (max-width: 900px) {
@@ -223,6 +249,4 @@ body {
     flex-direction: column;
     gap: 0.5rem;
   }
-}
-  color: #888;
 }

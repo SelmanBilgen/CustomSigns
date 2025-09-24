@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import PreviewCanvas from "./components/PreviewCanvas";
 import ControlsRow from "./components/ControlsRow";
-import {
-  FONT_OPTIONS,
-  COLOR_OPTIONS,
-  FONT_WIDTH_OPTIONS,
-} from "./options.js";
+import { FONT_OPTIONS, COLOR_OPTIONS, FONT_WIDTH_OPTIONS } from "./options.js";
 import { BACKGROUNDS } from "./backgrounds.js";
 import "./App.css";
 
@@ -54,8 +50,12 @@ const App = () => {
     <div className="app-container">
       <main className="main-content">
         <div className="canvas-section">
-          <header className="header">
+          {/* <header className="header">
             <div className="logo">CustomSigns</div>
+            
+          </header> */}
+
+          <div className="preview-area">
             <nav className="category-tabs">
               {Object.keys(BACKGROUNDS).map((category) => (
                 <button
@@ -70,25 +70,23 @@ const App = () => {
                 </button>
               ))}
             </nav>
-          </header>
-          <div className="background-options">
-            {BACKGROUNDS[activeCategory].map((bg) => (
-              <div
-                key={bg}
-                className={`bg-thumbnail ${
-                  activeBackground === bg ? "active" : ""
-                }`}
-                style={{ backgroundImage: `url(${bg})` }}
-                onClick={() => setActiveBackground(bg)}
-              />
-            ))}
-          </div>
-          <div className="preview-area">
             <PreviewCanvas
               lines={lines}
               background={activeBackground}
               showRuler={showRuler}
             />
+            <div className="background-options">
+              {BACKGROUNDS[activeCategory].map((bg) => (
+                <div
+                  key={bg}
+                  className={`bg-thumbnail ${
+                    activeBackground === bg ? "active" : ""
+                  }`}
+                  style={{ backgroundImage: `url(${bg})` }}
+                  onClick={() => setActiveBackground(bg)}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <aside className="controls-section">
