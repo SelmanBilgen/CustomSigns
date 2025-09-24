@@ -13,10 +13,9 @@ const COLOR_OPTIONS = [
   { label: "White", value: "#fff" },
   { label: "Orange", value: "#E85A29" },
 ];
-const INCH_TO_PX = 96;
-const FONT_SIZE_OPTIONS = Array.from({ length: 9 }, (_, i) => {
+const FONT_WIDTH_OPTIONS = Array.from({ length: 9 }, (_, i) => {
   const inch = 12 + i * 6;
-  return { label: `${inch}”`, value: (inch * INCH_TO_PX) / 10 };
+  return { label: `${inch}”`, value: inch };
 });
 
 function App() {
@@ -26,12 +25,8 @@ function App() {
   const [font2, setFont2] = useState(FONT_OPTIONS[0].value);
   const [color1, setColor1] = useState(COLOR_OPTIONS[0].value);
   const [color2, setColor2] = useState(COLOR_OPTIONS[0].value);
-  const [line1FontSize, setLine1FontSize] = useState(
-    FONT_SIZE_OPTIONS[0].value
-  );
-  const [line2FontSize, setLine2FontSize] = useState(
-    FONT_SIZE_OPTIONS[0].value
-  );
+  const [line1Width, setLine1Width] = useState(FONT_WIDTH_OPTIONS[0].value);
+  const [line2Width, setLine2Width] = useState(FONT_WIDTH_OPTIONS[0].value);
   const [background, setBackground] = useState("");
   const [showGrid, setShowGrid] = useState(false);
   const [textPosition, setTextPosition] = useState({ x: 100, y: 100 });
@@ -99,12 +94,12 @@ function App() {
               </select>
             </label>
             <label>
-              Size:
+              Width:
               <select
-                value={line1FontSize}
-                onChange={(e) => setLine1FontSize(Number(e.target.value))}
+                value={line1Width}
+                onChange={(e) => setLine1Width(Number(e.target.value))}
               >
-                {FONT_SIZE_OPTIONS.map((opt) => (
+                {FONT_WIDTH_OPTIONS.map((opt) => (
                   <option key={opt.label} value={opt.value}>
                     {opt.label}
                   </option>
@@ -153,12 +148,12 @@ function App() {
               </select>
             </label>
             <label>
-              Size:
+              Width:
               <select
-                value={line2FontSize}
-                onChange={(e) => setLine2FontSize(Number(e.target.value))}
+                value={line2Width}
+                onChange={(e) => setLine2Width(Number(e.target.value))}
               >
-                {FONT_SIZE_OPTIONS.map((opt) => (
+                {FONT_WIDTH_OPTIONS.map((opt) => (
                   <option key={opt.label} value={opt.value}>
                     {opt.label}
                   </option>
@@ -178,8 +173,8 @@ function App() {
           color1={color1}
           font2={font2}
           color2={color2}
-          line1FontSize={line1FontSize}
-          line2FontSize={line2FontSize}
+          line1Width={line1Width}
+          line2Width={line2Width}
         />
       </main>
     </div>

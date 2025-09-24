@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+import DraggableText from "./DraggableText";
 import "./PreviewCanvas.css";
 
-// Constants for crib mapping
-const CRIB_LENGTH_INCH = 52; // standard crib length
-const CRIB_WIDTH_PX = 900; // measured pixel width of crib in image
-const PX_PER_INCH = CRIB_WIDTH_PX / CRIB_LENGTH_INCH;
+// Constants for wall mapping
+const WALL_WIDTH_M = 2.5;
+const CANVAS_WIDTH_PX = 1625;
+const PX_PER_METER = CANVAS_WIDTH_PX / WALL_WIDTH_M;
+const INCH_TO_METER = 0.0254;
 
-function fitFontSize(text, fontFamily, targetWidth) {
-  // Create a hidden span to measure text width
+function fitFontSize(text, fontFamily, targetWidthPx) {
   const span = document.createElement("span");
   span.style.visibility = "hidden";
   span.style.position = "absolute";
@@ -22,9 +23,12 @@ function fitFontSize(text, fontFamily, targetWidth) {
     span.style.fontSize = `${fontSize}px`;
     span.textContent = text;
     measuredWidth = span.offsetWidth;
-    fontSize = fontSize * (targetWidth / measuredWidth);
+    if (measuredWidth > 0) {
+      fontSize = fontSize * (targetWidthPx / measuredWidth);
+    }
     tries++;
-  } while (Math.abs(measuredWidth - targetWidth) > 2 && tries < 10);
+  } while (Math.abs(measuredWidth - targetWidthPx) > 2 && tries < 10);
+
 
   document.body.removeChild(span);
   return fontSize;
@@ -37,40 +41,32 @@ function PreviewCanvas({
   color1,
   font2,
   color2,
-  line1Size = 30, // default 30 inch
-  line2Size = 12, // default 12 inch
+  line1Width = 30, // default 30 inch
+  line2Width = 12, // default 12 inch
 }) {
-  // Canvas dimensions
-  const canvasWidth = 1625;
-  const canvasHeight = 1280;
-
-  // Default positions
-  const defaultLine1Y = 5 * PX_PER_INCH; // 5 inch below top
-  const defaultLine1X = (canvasWidth - line1Size * PX_PER_INCH) / 2;
-  const defaultLine2Y = defaultLine1Y + 3 * PX_PER_INCH; // 3 inch below line 1
-  const defaultLine2X =
-    defaultLine1X + line1Size * PX_PER_INCH - line2Size * PX_PER_INCH; // align end
-
-  // Font size fitting
   const [fontSize1, setFontSize1] = useState(40);
   const [fontSize2, setFontSize2] = useState(40);
 
+  const line1WidthPx = line1Width * INCH_TO_METER * PX_PER_METER;
+  const line2WidthPx = line2Width * INCH_TO_METER * PX_PER_METER;
+
   useEffect(() => {
     if (line1) {
-      const size = fitFontSize(line1, font1, line1Size * PX_PER_INCH);
+      const size = fitFontSize(line1, font1, line1WidthPx);
       setFontSize1(size);
     }
-  }, [line1, font1, line1Size]);
+  }, [line1, font1, line1Width]);
 
   useEffect(() => {
     if (line2) {
-      const size = fitFontSize(line2, font2, line2Size * PX_PER_INCH);
+      const size = fitFontSize(line2, font2, line2WidthPx);
       setFontSize2(size);
     }
-  }, [line2, font2, line2Size]);
+  }, [line2, font2, line2Width]);
 
   return (
     <div
+      id="preview-canvas"
       className="preview-canvas"
       style={{
         width: "100%",
@@ -83,43 +79,29 @@ function PreviewCanvas({
         height: "550px",
       }}
     >
-      {/* Line 1 */}
-      <div
-        className="canvas-text"
+      <DraggableText
+        initialPosition={{ x: 20, y: 50 }}
         style={{
-          position: "absolute",
-          left: `${defaultLine1X}px`,
-          top: `${defaultLine1Y}px`,
           fontFamily: font1,
           color: color1,
           fontSize: `${fontSize1}px`,
-          width: `${line1Size * PX_PER_INCH}px`,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          cursor: "move",
+          width: `${line1WidthPx}px`,
         }}
       >
         {line1}
-      </div>
-      {/* Line 2 */}
+      </DraggableText>
       {line2 && (
-        <div
-          className="canvas-text"
+        <DraggableText
+          initialPosition={{ x: 20, y: 150 }}
           style={{
-            position: "absolute",
-            left: `${defaultLine2X}px`,
-            top: `${defaultLine2Y}px`,
             fontFamily: font2,
             color: color2,
             fontSize: `${fontSize2}px`,
-            width: `${line2Size * PX_PER_INCH}px`,
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            cursor: "move",
+            width: `${line2WidthPx}px`,
           }}
         >
           {line2}
-        </div>
+        </DraggableText>
       )}
     </div>
   );
