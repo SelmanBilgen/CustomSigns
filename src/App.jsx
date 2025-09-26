@@ -48,13 +48,14 @@ const App = () => {
 
   return (
     <div className="app-container">
+      <header className="header">
+        <div className="logo">
+          <img src="/logo/logo-2-3.png" alt="" />
+        </div>
+        <div className="title">Create Your Custom Design</div>
+      </header>
       <main className="main-content">
         <div className="canvas-section">
-          {/* <header className="header">
-            <div className="logo">CustomSigns</div>
-            
-          </header> */}
-
           <div className="preview-area">
             <nav className="category-tabs">
               {Object.keys(BACKGROUNDS).map((category) => (
@@ -91,13 +92,13 @@ const App = () => {
         </div>
         <aside className="controls-section">
           <div className="controls-header">
-            <h3>Customize your text</h3>
-            <button
+            <h3>Add or Delete and Customize Your Text</h3>
+            {/* <button
               onClick={() => setShowRuler(!showRuler)}
               className="ruler-toggle"
             >
               {showRuler ? "Hide" : "Show"} Ruler
-            </button>
+            </button> */}
           </div>
           <div className="customization-controls">
             {lines.map((line, index) => (

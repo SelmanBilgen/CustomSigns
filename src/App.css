@@ -2,7 +2,6 @@ body {
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
   background: #f8f8f8;
   margin: 0;
-  display: block;
   min-height: 100vh;
   color: #222;
 }
@@ -20,7 +19,7 @@ body {
 }
 
 .canvas-section {
-  margin-top: 3rem;
+  //margin-top: 3rem;
   flex: 3;
   display: flex;
   flex-direction: column;
@@ -38,9 +37,19 @@ body {
 }
 
 .header {
-  padding: 1rem 2rem;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  //margin-left: 10rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-family: "Hello spring", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  //text-align: center;
+  font-size: 40px;
+  //font-weight: 700;
+  padding: 0 12rem;
+  background: #efe8eeff;
+  //box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .customization-controls {
@@ -56,20 +65,25 @@ body {
   //grid-template-columns: 1fr auto auto auto auto;
   align-items: center;
   //gap: 10px;
+
+  padding: 1rem;
+  border-radius: 8px;
+  color-scheme: light;
+  border: 3px solid #bb87aeff;
 }
 
 .delete-btn {
   color: red;
 }
 
-.ruler-toggle {
+/* .ruler-toggle {
   color: #568f56ff
   background: none;
   border: 1px solid #9c4444ff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
-}
+} */
 
 .controls-header {
   display: flex;
@@ -112,29 +126,31 @@ body {
 }
 
 .add-line-btn {
+  /* display: inline-flex;
+  align-items: center; */
   width: 100%;
-  text-align: center;
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
+  text-align: left;
+  //border-top: 1px solid #eee;
+  //padding-top: 1rem;
   color: #007bff;
 }
 
-.logo {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  letter-spacing: 2px;
+.logo img {
+  width: 8rem;
+  border-radius: 50%;
+  margin-top: 1rem;
 }
 
 .category-tabs {
   display: flex;
-  gap: 1rem;
+  justify-content: center;
+  gap: 0.7rem;
   margin-bottom: 1rem;
 }
 .category-tabs button {
   background: #67a579ff;
   border: none;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 3rem;
   border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
@@ -148,9 +164,9 @@ body {
 .background-options {
   display: flex;
   justify-content: space-between;
-  gap: 3.5rem;
-  padding: 1rem 2rem;
-  background: #fff;
+  gap: 1rem;
+  padding: 1rem 1rem;
+  //background: #fff;
 }
 
 .bg-thumbnail {
@@ -161,6 +177,7 @@ body {
   transition: border-color 0.2s;
   background-size: cover;
   background-position: center;
+  border-radius: 12px;
 }
 
 .bg-thumbnail.active {
@@ -203,6 +220,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 1rem;
   background: #f8f8f8;
   min-height: 400px;
   overflow-y: auto;

@@ -12,12 +12,14 @@
   z-index: 0;
 }
 .canvas-text {
+  display: inline-block;
   font-size: 2rem;
   font-weight: 600;
   background: transparent;
   padding: 0;
   border-radius: 0;
-  box-shadow: none;
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.7);
+  //position: absolute;
 }
 .canvas-grid {
   position: absolute;

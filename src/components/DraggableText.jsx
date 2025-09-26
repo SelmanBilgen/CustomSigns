@@ -1,9 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const DraggableText = ({ children, style, initialPosition = { x: 0, y: 0 } }) => {
+const DraggableText = ({
+  children,
+  style,
+  initialPosition = { x: 0, y: 0 },
+}) => {
   const [position, setPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
-  const dragStartRef = useRef({ startX: 0, startY: 0, initialMouseX: 0, initialMouseY: 0 });
+  const dragStartRef = useRef({
+    startX: 0,
+    startY: 0,
+    initialMouseX: 0,
+    initialMouseY: 0,
+  });
   const nodeRef = useRef(null);
 
   const handleMouseDown = (e) => {
@@ -22,8 +31,10 @@ const DraggableText = ({ children, style, initialPosition = { x: 0, y: 0 } }) =>
     const handleMouseMove = (e) => {
       if (!isDragging) return;
       const parentRect = nodeRef.current.parentElement.getBoundingClientRect();
-      const dx = (e.clientX - parentRect.left) - dragStartRef.current.initialMouseX;
-      const dy = (e.clientY - parentRect.top) - dragStartRef.current.initialMouseY;
+      const dx =
+        e.clientX - parentRect.left - dragStartRef.current.initialMouseX;
+      const dy =
+        e.clientY - parentRect.top - dragStartRef.current.initialMouseY;
       setPosition({
         x: dragStartRef.current.startX + dx,
         y: dragStartRef.current.startY + dy,
@@ -35,16 +46,15 @@ const DraggableText = ({ children, style, initialPosition = { x: 0, y: 0 } }) =>
     };
 
     if (isDragging) {
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
     }
 
     return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging]);
-
 
   return (
     <div
@@ -57,7 +67,7 @@ const DraggableText = ({ children, style, initialPosition = { x: 0, y: 0 } }) =>
         top: `${position.y}px`,
         cursor: "move",
         zIndex: isDragging ? 1000 : 1,
-        userSelect: 'none',
+        userSelect: "none",
       }}
       onMouseDown={handleMouseDown}
     >

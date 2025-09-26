@@ -29,7 +29,6 @@ function fitFontSize(text, fontFamily, targetWidthPx) {
     tries++;
   } while (Math.abs(measuredWidth - targetWidthPx) > 2 && tries < 10);
 
-
   document.body.removeChild(span);
   return fontSize;
 }
@@ -52,7 +51,8 @@ const Line = ({ text, font, color, width, initialPosition }) => {
         fontFamily: font,
         color: color,
         fontSize: `${fontSize}px`,
-        width: `${widthPx}px`,
+        width: `${widthPx + 2}px`,
+        // +2 is to avoid accidental newlines
       }}
     >
       {text}
@@ -95,7 +95,7 @@ function PreviewCanvas({ lines, background, showRuler }) {
         <Line
           key={index}
           {...line}
-          initialPosition={{ x: 20, y: 50 + index * 100 }}
+          initialPosition={{ x: 150, y: 50 + index * 100 }}
         />
       ))}
     </div>
