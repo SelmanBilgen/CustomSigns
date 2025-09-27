@@ -1,55 +1,81 @@
 body {
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   background: #f8f8f8;
   margin: 0;
-  min-height: 100vh;
   color: #222;
 }
 
-.app-container {
-  //display: flex;
+body, #root, .app-container {
   height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
 }
 
 .main-content {
   display: flex;
-  flex-direction: row;
   flex: 1;
-  //margin-top: 3rem;
+  transition: all 0.3s ease;
 }
 
 .canvas-section {
-  //margin-top: 3rem;
-  flex: 3;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   background: #f8f8f8;
+  transition: all 0.3s ease;
 }
 
 .controls-section {
-  //margin-top: 3rem;
-  flex: 1;
-  justify-content: wrap;
+  flex-basis: 350px;
+  flex-shrink: 0;
   padding: 2rem;
   background: #fff;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.04);
+  box-shadow: -2px 0 8px rgba(0,0,0,0.04);
   overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.main-content.controls-hidden .controls-section {
+  flex-basis: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.toggle-controls-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-left: none;
+  width: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .controls-section {
+    flex-basis: auto;
+    width: 100%;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+  }
+
+  .toggle-controls-btn {
+    display: none;
+  }
 }
 
 .header {
-  //margin-left: 10rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  font-family: "Hello spring", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  //text-align: center;
-  font-size: 40px;
-  //font-weight: 700;
-  padding: 0 12rem;
-  background: #efe8eeff;
-  //box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 1rem 2rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .customization-controls {
@@ -59,31 +85,36 @@ body {
 }
 
 .controls-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  //grid-template-columns: 1fr auto auto auto auto;
-  align-items: center;
-  //gap: 10px;
-
+  position: relative;
+  border: 1px solid #ddd;
   padding: 1rem;
   border-radius: 8px;
-  color-scheme: light;
-  border: 3px solid #bb87aeff;
 }
 
 .delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
   color: red;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
-/* .ruler-toggle {
-  color: #568f56ff
+.row-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ruler-toggle {
   background: none;
-  border: 1px solid #9c4444ff;
+  border: 1px solid #ddd;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
-} */
+}
 
 .controls-header {
   display: flex;
@@ -92,32 +123,40 @@ body {
   margin-bottom: 1rem;
 }
 
-.color-options {
-  display: flex;
-  gap: 0.5rem;
+.color-dropdown {
+  position: relative;
 }
 
-.color-cubes {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  max-width: 200px;
+.selected-color {
+  width: 50px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+.color-grid {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  z-index: 10;
+}
+
 .color-cube {
   width: 24px;
   height: 24px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid gray;
-  transition: border-color 0.2s;
 }
 
-.color-cube.selected {
-  border-color: #007bff;
-}
-
-.delete-btn,
-.add-line-btn {
+.delete-btn, .add-line-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -126,58 +165,63 @@ body {
 }
 
 .add-line-btn {
-  /* display: inline-flex;
-  align-items: center; */
   width: 100%;
-  text-align: left;
-  //border-top: 1px solid #eee;
-  //padding-top: 1rem;
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
   color: #007bff;
 }
 
-.logo img {
-  width: 8rem;
-  border-radius: 50%;
-  margin-top: 1rem;
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
 }
 
 .category-tabs {
   display: flex;
-  justify-content: center;
-  gap: 0.7rem;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 .category-tabs button {
-  background: #67a579ff;
+  background: #f0f0f0;
   border: none;
-  padding: 0.5rem 3rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
 }
 .category-tabs button:hover,
-.category-tabs button.active {
-  background: #3e6a3fff;
+.category-tabs button.active,
+.upload-btn {
+  background: #e0e0e0;
+}
+
+.upload-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .background-options {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1rem;
-  //background: #fff;
+  gap: 10px;
+  padding: 10px 2rem;
+  background: #fff;
 }
 
 .bg-thumbnail {
-  width: 8rem;
-  height: 6rem;
+  width: 80px;
+  height: 60px;
   border: 2px solid transparent;
   cursor: pointer;
   transition: border-color 0.2s;
   background-size: cover;
   background-position: center;
-  border-radius: 12px;
 }
 
 .bg-thumbnail.active {
@@ -199,7 +243,7 @@ body {
   font-size: 1rem;
 }
 .cta {
-  background: #e85a29;
+  background: #E85A29;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -207,7 +251,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(232, 90, 41, 0.08);
+  box-shadow: 0 2px 8px rgba(232,90,41,0.08);
   transition: background 0.2s;
 }
 .cta:hover {
@@ -217,10 +261,8 @@ body {
 .preview-area {
   flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 1rem;
   background: #f8f8f8;
   min-height: 400px;
   overflow-y: auto;
@@ -231,19 +273,12 @@ body {
   height: 400px;
   background: #fff;
   border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   color: #bbb;
-}
-.line-text {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 1rem;
 }
 
 @media (max-width: 900px) {
@@ -267,4 +302,6 @@ body {
     flex-direction: column;
     gap: 0.5rem;
   }
+}
+  color: #888;
 }

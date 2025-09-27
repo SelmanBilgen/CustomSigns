@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import PreviewCanvas from "./components/PreviewCanvas";
 import ControlsRow from "./components/ControlsRow";
-import { FONT_OPTIONS, COLOR_OPTIONS, FONT_WIDTH_OPTIONS } from "./options.js";
+import {
+  FONT_OPTIONS,
+  COLOR_OPTIONS,
+  FONT_WIDTH_OPTIONS,
+} from "./options.js";
 import { BACKGROUNDS } from "./backgrounds.js";
 import "./App.css";
 
@@ -19,6 +23,8 @@ const App = () => {
     BACKGROUNDS.Nursery[0]
   );
   const [showRuler, setShowRuler] = useState(false);
+  const [customBackground, setCustomBackground] = useState(null);
+  const [controlsVisible, setControlsVisible] = useState(true);
 
   const handleAddLine = () => {
     if (lines.length < 5) {
@@ -46,17 +52,24 @@ const App = () => {
     setLines(newLines);
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCustomBackground(reader.result);
+        setActiveCategory(null);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="app-container">
-      <header className="header">
-        <div className="logo">
-          <img src="/logo/logo-2-3.png" alt="" />
-        </div>
-        <div className="title">Create Your Custom Design</div>
-      </header>
-      <main className="main-content">
+      <main className={`main-content ${controlsVisible ? "" : "controls-hidden"}`}>
         <div className="canvas-section">
-          <div className="preview-area">
+          <header className="header">
+            <div className="logo">CustomSigns</div>
             <nav className="category-tabs">
               {Object.keys(BACKGROUNDS).map((category) => (
                 <button
@@ -64,18 +77,20 @@ const App = () => {
                   className={activeCategory === category ? "active" : ""}
                   onClick={() => {
                     setActiveCategory(category);
+                    setCustomBackground(null);
                     setActiveBackground(BACKGROUNDS[category][0]);
                   }}
                 >
                   {category}
                 </button>
               ))}
+              <label className="upload-btn">
+                Upload your image
+                <input type="file" onChange={handleFileChange} hidden />
+              </label>
             </nav>
-            <PreviewCanvas
-              lines={lines}
-              background={activeBackground}
-              showRuler={showRuler}
-            />
+          </header>
+          {!customBackground && (
             <div className="background-options">
               {BACKGROUNDS[activeCategory].map((bg) => (
                 <div
@@ -88,44 +103,63 @@ const App = () => {
                 />
               ))}
             </div>
+          )}
+          <div className="preview-area">
+            <PreviewCanvas
+              lines={lines}
+              background={customBackground || activeBackground}
+              showRuler={showRuler}
+            />
           </div>
         </div>
-        <aside className="controls-section">
-          <div className="controls-header">
-            <h3>Add or Delete and Customize Your Text</h3>
-            {/* <button
-              onClick={() => setShowRuler(!showRuler)}
-              className="ruler-toggle"
-            >
-              {showRuler ? "Hide" : "Show"} Ruler
-            </button> */}
-          </div>
-          <div className="customization-controls">
-            {lines.map((line, index) => (
-              <ControlsRow
-                key={index}
-                line={line.text}
-                onLineChange={(value) => handleLineChange(index, "text", value)}
-                font={line.font}
-                onFontChange={(value) => handleLineChange(index, "font", value)}
-                color={line.color}
-                onColorChange={(value) =>
-                  handleLineChange(index, "color", value)
-                }
-                width={line.width}
-                onWidthChange={(value) =>
-                  handleLineChange(index, "width", value)
-                }
-                onDelete={() => handleDeleteLine(index)}
-              />
-            ))}
-            {lines.length < 5 && (
-              <button onClick={handleAddLine} className="add-line-btn">
-                + Add a new line
+        <button
+          className="toggle-controls-btn"
+          onClick={() => setControlsVisible(!controlsVisible)}
+        >
+          {controlsVisible ? ">" : "<"}
+        </button>
+        {controlsVisible && (
+          <aside className="controls-section">
+            <div className="controls-header">
+              <h3>Customize your text</h3>
+              <button
+                onClick={() => setShowRuler(!showRuler)}
+                className="ruler-toggle"
+              >
+                {showRuler ? "Hide" : "Show"} Ruler
               </button>
-            )}
-          </div>
-        </aside>
+            </div>
+            <div className="customization-controls">
+              {lines.map((line, index) => (
+                <ControlsRow
+                  key={index}
+                  line={line.text}
+                  onLineChange={(value) =>
+                    handleLineChange(index, "text", value)
+                  }
+                  font={line.font}
+                  onFontChange={(value) =>
+                    handleLineChange(index, "font", value)
+                  }
+                  color={line.color}
+                  onColorChange={(value) =>
+                    handleLineChange(index, "color", value)
+                  }
+                  width={line.width}
+                  onWidthChange={(value) =>
+                    handleLineChange(index, "width", value)
+                  }
+                  onDelete={() => handleDeleteLine(index)}
+                />
+              ))}
+              {lines.length < 5 && (
+                <button onClick={handleAddLine} className="add-line-btn">
+                  + Add a new line
+                </button>
+              )}
+            </div>
+          </aside>
+        )}
       </main>
     </div>
   );
